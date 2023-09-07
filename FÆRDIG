@@ -1,0 +1,135 @@
+MAIN
+import BilEjer.BilEjer;
+import Bil.Bil;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            // Opret et array af Bil.Bil-objekter
+            Bil[] biler = new Bil[3];
+            biler[0] = new Bil("Toyota", "Camry", 2010);
+            biler[1] = new Bil("Honda", "Civic", 2015);
+            biler[2] = new Bil("Ford", "Focus", 2005);
+            biler[2] = new Bil("Telsa", "Model 3", 2018);
+            biler[2] = new Bil("BMW", "M3", 2017);
+            biler[2] = new Bil("Ford", "Fiesta", 2013);
+            biler[2] = new Bil("BMW", "M2", 2003);
+
+            // Opret en instans af BilEjer.BilEjer med flere biler
+            BilEjer ejer = new BilEjer("John Doe", 35, biler);
+
+            // Udskriv objektet som en streng ved hjælp af toString-metoden i BilEjer.BilEjer-klassen
+            System.out.println(ejer);
+
+            // Beregn og udskriv den samlede ejerafgift for alle biler
+            double totalEjerafgift = ejer.beregnTotalEjerafgift();
+            System.out.println("Samlet ejerafgift for alle biler: " + totalEjerafgift);
+
+            // Find og udskriv den ældste bil
+            Bil ældsteBil = ejer.findÆldsteBil();
+            System.out.println("Ældste bil er en " + ældsteBil.getBilmærke() + " fra år " + ældsteBil.getRegÅr());
+        }
+    }
+
+______________________________________________________
+package BilEjer;
+
+import Bil.Bil;
+import BilEjer.BilEjer;
+
+import java.util.Arrays;
+public class BilEjer {
+    private String navn;
+    private int ejerAlder;
+    private Bil[] biler;
+
+    public BilEjer(String navn, int ejerAlder, Bil[] biler) {
+        this.navn = navn;
+        this.ejerAlder = ejerAlder;
+        this.biler = biler;
+    }
+
+    // Metode til at beregne den samlede ejerafgift for alle biler
+    public double beregnTotalEjerafgift() {
+        double totalEjerafgift = 0.0;
+        for (Bil bil : biler) {
+            if (bil !=null)
+            totalEjerafgift += bil.beregnEjerafgift(); // Brug bilens metode til at beregne ejerafgift
+        }
+        return totalEjerafgift;
+    }
+
+    // Metode til at finde den ældste bil
+    public Bil findÆldsteBil() {
+        Bil ældsteBil = biler[0];
+        for (Bil bil : biler) {
+            if (bil !=null)
+            if (bil.getRegÅr() < ældsteBil.getRegÅr()) {
+                ældsteBil = bil;
+            }
+        }
+        return ældsteBil;
+    }
+
+
+    @Override
+    public String toString() {
+        return "BilEjer [navn=" + navn + ", ejerAlder=" + ejerAlder + ", biler=" + Arrays.toString(biler) + "]";
+    }
+}
+
+______________________________________________________________-
+
+package Bil;
+
+public class Bil {
+    private String bilmærke;
+    private String bilmodel;
+    private int regÅr;
+
+    public Bil(String bilmærke, String bilmodel, int regÅr) {
+        this.bilmærke = bilmærke;
+        this.bilmodel = bilmodel;
+        this.regÅr = regÅr;
+    }
+
+    // Tilføj getters og setters efter behov
+    public String getBilmærke() {
+        return bilmærke;
+    }
+
+    public int getRegÅr() {
+        return regÅr;
+    }
+
+    // Tilpas toString-metoden efter behov
+    @Override
+    public String toString() {
+        return "Bil.Bil [bilmærke=" + bilmærke + ", bilmodel=" + bilmodel + ", regÅr=" + regÅr + "]";
+    }
+
+    public double beregnEjerafgift() {
+        // Implementer den faktiske beregning af ejerafgift baseret på bilens egenskaber
+        // Her er et fiktivt eksempel som reference:
+        // For eksempel, hvis ejerafgiften afhænger af bilens registreringsår:
+        // Du kan erstatte dette med den faktiske formel eller beregning
+        int aktueltÅr = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        int alder = aktueltÅr - regÅr;
+        double ejerafgift = 0.0;
+
+        // Her er et eksempel på en fiktiv beregningsmetode:
+        // Beregn ejerafgift baseret på alder eller andre faktorer
+        if (alder >= 0 && alder < 3) {
+            ejerafgift = 8000.0;
+        } else if (alder >= 3 && alder < 6) {
+            ejerafgift = 4000.0;
+        } else {
+            ejerafgift = 2500.0;
+        }
+
+        return ejerafgift;
+    }
+
+}
+
+
